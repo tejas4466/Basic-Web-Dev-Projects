@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PageRank Visualization</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>PageRank Visualization</h1>
+    <section>
+      <p>Enter the adjacency matrix for the directed graph:</p>
+      <table>
+        <tr>
+          <td><input type="number" id="page1-to-page1" value="0" /></td>
+          <td><input type="number" id="page1-to-page2" value="1" /></td>
+          <td><input type="number" id="page1-to-page3" value="1" /></td>
+          <td><input type="number" id="page1-to-page4" value="0" /></td>
+        </tr>
+        <tr>
+          <td><input type="number" id="page2-to-page1" value="1" /></td>
+          <td><input type="number" id="page2-to-page2" value="0" /></td>
+          <td><input type="number" id="page2-to-page3" value="0" /></td>
+          <td><input type="number" id="page2-to-page4" value="1" /></td>
+        </tr>
+        <tr>
+          <td><input type="number" id="page3-to-page1" value="0" /></td>
+          <td><input type="number" id="page3-to-page2" value="0" /></td>
+          <td><input type="number" id="page3-to-page3" value="0" /></td>
+          <td><input type="number" id="page3-to-page4" value="1" /></td>
+        </tr>
+        <tr>
+          <td><input type="number" id="page4-to-page1" value="0" /></td>
+          <td><input type="number" id="page4-to-page2" value="1" /></td>
+          <td><input type="number" id="page4-to-page3" value="1" /></td>
+          <td><input type="number" id="page4-to-page4" value="0" /></td>
+        </tr>
+      </table>
+      <button onclick="getPageRank()">Save Matrix</button>
+
+      <p>
+        Click on the "Next Iteration" button to visualize the evolution of
+        PageRank values over iterations.
+      </p>
+      <div id="container"></div>
+      <button onclick="nextIteration()">Next Iteration</button>
+
+      <script>
+        let adjacencyMatrix = [];
+        function getPageRank() {
+          // Get user input for adjacency matrix
+          const N = 4;
+          adjacencyMatrix = [];
+          for (let i = 0; i < N; i++) {
+            adjacencyMatrix.push([]);
+            for (let j = 0; j < N; j++) {
+              adjacencyMatrix[i].push(
+                parseFloat(
+                  document.getElementById(`page${i + 1}-to-page${j + 1}`).value
+                )
+              );
+            }
+          }
+          console.log(adjacencyMatrix);
+
+          pageRank = [1, 1, 1, 1];  
+          updatePageRank();
+        }
+        const dampingFactor = 0.85;
+        const maxIterations = 10;
+        const tolerance = 0.0001;
+
+        let pageRank = [1, 1, 1, 1]; // Initial PageRank values
+
+        function calculatePageRank() {
+          let newPageRank = [];
+
+          for (let i = 0; i < adjacencyMatrix.length; i++) {
+            let sum = 0;
+            for (let j = 0; j < adjacencyMatrix.length; j++) {
+              if (adjacencyMatrix[j][i] === 1) {
+                let outboundLinks = 0;
+                for (let k = 0; k < adjacencyMatrix.length; k++) {
+                  outboundLinks += adjacencyMatrix[j][k];
+                }
+                sum += pageRank[j] / outboundLinks;
+              }
+            }
+            newPageRank.push(
+              (1 - dampingFactor) / adjacencyMatrix.length + dampingFactor * sum
+            );
+          }
+
+          return newPageRank;
+        }
+
+        function updatePageRank() {
+          const container = document.getElementById("container");
+          container.innerHTML = "";
+
+          for (let i = 0; i < pageRank.length; i++) {
+            const pageElement = document.createElement("div");
+            pageElement.className = "page";
+            pageElement.textContent = `Page ${i + 1}`;
+            const rankElement = document.createElement("div");
+            rankElement.className = "rank";
+            rankElement.textContent = `Rank: ${pageRank[i].toFixed(4)}`;
+            pageElement.appendChild(rankElement);
+            container.appendChild(pageElement);
+          }
+        }
+
+        function nextIteration() {
+          for (let i = 0; i < maxIterations; i++) {
+            const newPageRank = calculatePageRank();
+            let converged = true;
+
+            for (let j = 0; j < pageRank.length; j++) {
+              if (Math.abs(newPageRank[j] - pageRank[j]) > tolerance) {
+                converged = false;
+                break;
+              }
+            }
+
+            if (converged) {
+              break;
+            }
+
+            pageRank = newPageRank;
+            console.log(pageRank);
+            updatePageRank();
+          }
+        }
+
+        // Initial visualization
+        updatePageRank();
+      </script>
+    </section>
+  </body>
+</html>

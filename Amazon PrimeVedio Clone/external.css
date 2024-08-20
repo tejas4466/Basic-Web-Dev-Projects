@@ -1,0 +1,10 @@
+.linearGradient1{
+    background-image: linear-gradient(to right, #000 40%, transparent 58%), url(./Assets/backgroundImg.jpg);
+    background-position: right top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #000;
+}
+.roboto{
+    font-family: "Roboto", sans-serif;
+}

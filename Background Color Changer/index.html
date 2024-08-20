@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Background Color Changer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="font-mono text-4xl font-medium text-center">
+    <div
+      class="container z-10 flex items-center justify-center w-screen h-screen text-center text-white"
+    >
+      <div
+        class="flex items-center justify-center w-1/2 gap-4 bg-black h-60 content"
+      >
+        <h1>Background Color Changer</h1>
+        <button id="start" class="p-4 bg-red-600">Start</button>
+        <button id="stop" class="p-4 bg-green-600">Stop</button>
+      </div>
+    </div>
+
+    <script>
+      const start = document.querySelector("#start");
+      const stop = document.querySelector("#stop");
+      start.addEventListener("click", (e) => {
+        const body = document.querySelector("body");
+        const interval = setInterval(function () {
+          let color = generateRandomColor();
+          body.style.backgroundColor = color;
+        }, 400);
+        stop.addEventListener("click", (e) => {
+          clearInterval(interval);
+        });
+      });
+
+      function generateRandomColor() {
+        let val1 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+        let val2 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+        let val3 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+        return `rgb(${val1},${val2},${val3})`;
+      }
+    </script>
+  </body>
+</html>

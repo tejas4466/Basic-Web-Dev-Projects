@@ -1,0 +1,82 @@
+.header {
+  font-size: 20px;
+  text-align: left;
+  margin-left: 10px;
+  width: 98vw;
+  text-align: center;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+.button {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  row-gap: 20px;
+  column-gap: 10px;
+  height: 60vh;
+  width: 30vw;
+}
+
+input {
+  height: 10vh;
+  width: 30vw;
+  border: 2px solid white;
+  font-size: 40px;
+  text-align: right;
+  cursor: pointer;
+  color: black;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 100px;
+}
+
+button {
+  background-color: blue;
+  font-size: 26px;
+  border: 3px solid white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 80px;
+}
+
+.equal {
+  position: fixed;
+  width: 229px;
+  bottom: 57px;
+  left: 770px;
+  height: 72px;
+  background-color: orange;
+}
+.operator {
+  background-color: greenyellow;
+}
+
+.AC {
+  background-color: red;
+}
+
+.DEL {
+  background-color: red;
+}
